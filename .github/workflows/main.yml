@@ -1,0 +1,41 @@
+name: Deploy todo app on gcp cloud run
+
+on:
+  push:
+    branches:
+      - main
+env:
+    GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    GCP_REGION: ${{ vars.GCP_REGION }}
+    SERVICE_NAME: todo-app
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Authenticate to the gcp
+              uses: google-github-actions/auth@v0.3.0
+              with:
+                credentials: ${{ vars.GCP_CREDENTIALS }}
+            - name: Build docker image
+              run: |
+                IMAGE_NAME="gcr.io/$GCP_PROJECT_ID/$SERVICE_NAME"
+                docker build -t $IMAGE_NAME .
+
+            - name: Push docker image to artifact
+              run: | 
+                IMAGE_NAME="gcr.io/$GCP_PROJECT_ID/$SERVICE_NAME"
+                docker push "$IMAGE_NAME"
+
+            - name: Deploy to cloud run
+              run: | 
+                IMAGE_NAME="gcr.io/$GCP_PROJECT_ID/$SERVICE_NAME"
+                gcloud run deploy "$SERVICE_NAME" \
+                    --image "$IMAGE_NAME" \
+                    --region "$GCP_REGION" \
+                    --platform managed \
+                    --allow-unauthenticated
+             
