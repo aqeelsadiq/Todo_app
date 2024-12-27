@@ -25,7 +25,7 @@ jobs:
 
 
             - name: Delete image if exist
-              run: gcloud container images delete ${{ env.SERVICE_NAME }} --force-delete-tags
+              run: gcloud container images delete gcr.io/${{env.GCP_PROJECT_ID}}/${{ env.SERVICE_NAME }} --force-delete-tags
 
             - name: Build docker image
               run: |
