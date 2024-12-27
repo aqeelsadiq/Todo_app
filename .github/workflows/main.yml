@@ -22,7 +22,7 @@ jobs:
                 credentials_json: ${{ secrets.GCP_CREDENTIALS }}
             - name: Configure Docker with GCP
               run: gcloud auth configure-docker   
-               
+
             - name: Build docker image
               run: |
                 IMAGE_NAME="gcr.io/$GCP_PROJECT_ID/$SERVICE_NAME"
@@ -41,4 +41,5 @@ jobs:
                     --region "$GCP_REGION" \
                     --platform managed \
                     --allow-unauthenticated
+                    --port 3000
              
