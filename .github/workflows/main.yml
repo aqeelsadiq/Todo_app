@@ -19,7 +19,7 @@ jobs:
             - name: Authenticate to the gcp
               uses: google-github-actions/auth@v1
               with:
-                credentials: ${{ secrets.GCP_CREDENTIALS }}
+                credentials_json: ${{ secrets.GCP_CREDENTIALS }}
             - name: Build docker image
               run: |
                 IMAGE_NAME="gcr.io/$GCP_PROJECT_ID/$SERVICE_NAME"
