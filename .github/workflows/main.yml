@@ -7,7 +7,7 @@ on:
 env:
     GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
     GCP_REGION: ${{ vars.GCP_REGION }}
-    SERVICE_NAME: todo-app
+    SERVICE_NAME: todo-app-1
 
 jobs:
     deploy:
@@ -40,6 +40,6 @@ jobs:
                     --image "$IMAGE_NAME" \
                     --region "$GCP_REGION" \
                     --platform managed \
-                    --allow-unauthenticated
+                    --allow-unauthenticated \
                     --port 3000
              
