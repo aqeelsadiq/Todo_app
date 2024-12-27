@@ -1,4 +1,4 @@
-name: Deploy todo app on gcp cloud run
+name: Deploy todo app on goodle cp cloud run
 
 on:
   push:
