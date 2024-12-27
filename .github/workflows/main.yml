@@ -20,6 +20,9 @@ jobs:
               uses: google-github-actions/auth@v1
               with:
                 credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+            - name: Configure Docker with GCP
+              run: gcloud auth configure-docker   
+               
             - name: Build docker image
               run: |
                 IMAGE_NAME="gcr.io/$GCP_PROJECT_ID/$SERVICE_NAME"
